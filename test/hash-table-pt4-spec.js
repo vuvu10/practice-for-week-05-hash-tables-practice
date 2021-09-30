@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const HashTable = require('../hash-table.js');
 
 
-describe('Hash table insert with collisions', () => {
+describe('Hash table insert with hash AND key collisions', () => {
 
   let hashTable;
 
@@ -13,11 +13,12 @@ describe('Hash table insert with collisions', () => {
 
   });
 
-  it('can insert a value with linked list collisions', () => {
+  it('insert handles hash collisions and updates values for same key collisions', () => {
 
-    hashTable.insert("key-1", "val-1");
-    hashTable.insert("key-2", "val-2");
-    hashTable.insert("key-3", "val-3");
+    hashTable.insertWithHashAndKeyCollisions("key-1", "val-1");
+    hashTable.insertWithHashAndKeyCollisions("key-2", "val-2");
+    hashTable.insertWithHashAndKeyCollisions("key-3", "val-3");
+    hashTable.insertWithHashAndKeyCollisions("key-1", "val-100000");
 
     expect(hashTable.count).to.equal(3);
     expect(hashTable.capacity).to.equal(2);
@@ -28,7 +29,7 @@ describe('Hash table insert with collisions', () => {
     const pairA = hashTable.data[0].next;
 
     expect(pairA.key).to.equal("key-1");
-    expect(pairA.value).to.equal("val-1");
+    expect(pairA.value).to.equal("val-100000");
 
     expect(pairB.key).to.equal("key-2");
     expect(pairB.value).to.equal("val-2");
@@ -39,4 +40,3 @@ describe('Hash table insert with collisions', () => {
   });
 
 });
-

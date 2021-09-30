@@ -3,7 +3,7 @@ const { expect } = require('chai');
 const HashTable = require('../hash-table.js');
 
 
-describe('Hash function', () => {
+describe('Hash table insert no collision handling', () => {
 
   let hashTable;
 
@@ -13,43 +13,36 @@ describe('Hash function', () => {
 
   });
 
-  it('hash uses first 8 characters of sha256 hash', () => {
+  it('insert adds key-value pair that does not cause collisions', () => {
 
-    // First 8 digits of sha256("A") are 0x559aead0
-    expect(hashTable.hash("A")).to.equal(1436216016);
+    hashTable.insertNoCollisions("key-1", "val-1");
+    hashTable.insertNoCollisions("key-2", "val-2");
 
-    // First 8 digits of sha256("B") are 0xdf7e70e
-    expect(hashTable.hash("B")).to.equal(3749605605);
+    expect(hashTable.count).to.equal(2);
+    expect(hashTable.capacity).to.equal(2);
+    expect(hashTable.data.length).to.equal(2);
 
-    // First 8 digits of sha256("C") are 0x6b23c0d5
-    expect(hashTable.hash("C")).to.equal(1797505237);
+    const pairA = hashTable.data[0];
+    const pairB = hashTable.data[1];
 
-    // First 8 digits of sha256("ABC") are 0xb5d4045c
-    expect(hashTable.hash("ABC")).to.equal(3050570844);
+    expect(pairA.key).to.equal("key-1");
+    expect(pairA.value).to.equal("val-1");
 
-    // First 8 digits of sha256("hello world") are 0xb94d27b9
-    expect(hashTable.hash("hello world")).to.equal(3108841401);
+    expect(pairB.key).to.equal("key-2");
+    expect(pairB.value).to.equal("val-2");
 
   });
 
-  it('hashMod function returns the hash value modulo the number of buckets', () => {
+  it('insert throws an error on collisions', () => {
 
-    // 2 buckets
-    expect(hashTable.hashMod("A")).to.equal(0);
-    expect(hashTable.hashMod("B")).to.equal(1);
-    expect(hashTable.hashMod("C")).to.equal(1);
-    expect(hashTable.hashMod("ABC")).to.equal(0);
+    hashTable.insertNoCollisions("key-1", "val-1");
+    hashTable.insertNoCollisions("key-2", "val-2");
 
-    expect(hashTable.hashMod("hello world")).to.equal(1);
+    // causes a key collision
+    expect(() => hashTable.insertNoCollisions("key-2", "val-2")).to.throw(Error, 'hash or key collision!');
 
-    // 10 buckets
-    hashTable = new HashTable(10);
-    expect(hashTable.hashMod("A")).to.equal(6);
-    expect(hashTable.hashMod("B")).to.equal(5);
-    expect(hashTable.hashMod("C")).to.equal(7);
-    expect(hashTable.hashMod("ABC")).to.equal(4);
-
-    expect(hashTable.hashMod("hello world")).to.equal(1);
+    // causes a hash collision
+    expect(() => hashTable.insertNoCollisions("key-3", "val-3")).to.throw(Error, 'hash or key collision!');
 
   });
 
