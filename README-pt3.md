@@ -1,8 +1,7 @@
 # Hash Table Practice Part 3
 
 In this four-part exercise, you will start implementing a hash table that
-handles hash collisions with linked list chaining and key collisions by
-overwriting values.
+handles hash collisions with linked list chaining.
 
 ## Setup
 
@@ -11,8 +10,8 @@ overwriting values.
 
 ## Hash table insert with hash collisions
 
-Finally, you will modify your insert function to handle hash collisions with
-linked list chaining.
+You will now write an insert function to handle hash collisions with linked
+list chaining.
 
 `insertWithHashCollisions(key, value)` will create a new `KeyValuePair()`
 with the input key and value and store it in the data bucket location returned

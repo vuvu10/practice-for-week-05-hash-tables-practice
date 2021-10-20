@@ -33,16 +33,25 @@ describe('Hash table insert no collision handling', () => {
 
   });
 
-  it('insert throws an error on collisions', () => {
+  it('insert throws an error if hash collision occurs', () => {
 
     hashTable.insertNoCollisions("key-1", "val-1");
     hashTable.insertNoCollisions("key-2", "val-2");
 
-    // causes a key collision
-    expect(() => hashTable.insertNoCollisions("key-2", "val-2")).to.throw(Error, 'hash or key collision!');
+    const errorMessage = 'hash collision or same key/value pair already exists!'
+    // a hash collision
+    expect(() => hashTable.insertNoCollisions("key-3", "val-3")).to.throw(Error, errorMessage);
 
-    // causes a hash collision
-    expect(() => hashTable.insertNoCollisions("key-3", "val-3")).to.throw(Error, 'hash or key collision!');
+  });
+
+  it('insert throws an error if same key/value pair exists', () => {
+
+    hashTable.insertNoCollisions("key-1", "val-1");
+    hashTable.insertNoCollisions("key-2", "val-2");
+
+    const errorMessage = 'hash collision or same key/value pair already exists!'
+    // a same key/pair insert
+    expect(() => hashTable.insertNoCollisions("key-2", "val-2")).to.throw(Error, errorMessage);
 
   });
 

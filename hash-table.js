@@ -30,7 +30,7 @@ class HashTable {
     // Your code here
   }
 
-  insertWithHashAndKeyCollisions(key, value) {
+  insert(key, value) {
     // Your code here
   }
 

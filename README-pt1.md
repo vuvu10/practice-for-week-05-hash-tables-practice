@@ -1,8 +1,7 @@
 # Hash Table Practice Part 1
 
 In this four-part exercise, you will start implementing a hash table that
-handles hash collisions with linked list chaining and key collisions by
-overwriting values.
+handles hash collisions with linked list chaining.
 
 ## Setup
 
