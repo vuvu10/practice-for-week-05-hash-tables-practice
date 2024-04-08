@@ -23,12 +23,15 @@ class HashTable {
 
   hash(key) {
     // Your code here
-    this.hash(key);
+    const hashValue = sha256(key);
+    return parseInt(hashValue.slice(0, 8), 16);
+
   }
 
   hashMod(key) {
     // Your code here
-    this.hashMod(key);
+    return this.hash(key) % this.capacity;
+
   }
 
   insertNoCollisions(key, value) {
