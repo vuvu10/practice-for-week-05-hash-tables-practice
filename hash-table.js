@@ -54,30 +54,25 @@ class HashTable {
   insertWithHashCollisions(key, value) {
     // Your code here
     const index = this.hashMod(key);
+
+    const currentHead = this.data[index];
+
     const newPair = new KeyValuePair(key, value);
-    let current = this.data[index];
-    if (current === null) {
-      this.data[index] = newPair;
-      this.count++;
-    } else {
-      while (current.next !== null) {
-        current = current.next;
-      }
-      current.next = newPair;
-      this.count++;
-    }
+
+    newPair.next = currentHead;
+
+    this.data[index] = newPair;
+
+    this.count++;
+
+
 
 
   }
 
   insert(key, value) {
     // Your code here
-    /* const loadFactor = this.count / this.capacity;
-    if (loadFactor > 0.7) {
-      this.rehash();
-    }
-    this.insertWithHashCollisions(key, value);
- */
+
 
 
 
